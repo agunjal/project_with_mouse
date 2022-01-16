@@ -1,6 +1,7 @@
 import React from 'react'
 import { Quadrant } from './Quadrant'
 import getDisplayName from './getDisplayName'
+import hoistNonReactStatic from 'hoist-non-react-statics'
 
 function withMouse(WrappedComponent, options) {
   class WithMouse extends React.Component {
@@ -9,24 +10,48 @@ function withMouse(WrappedComponent, options) {
       y: 0
     }
 
+    offset = {
+      x: 0,
+      y: 0
+    }
+
+    componentDidMount() {
+      this.setOffset()
+      window.addEventListener('resize', this.setOffset)
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.setOffset)
+    }
+
+    setOffset = () => {
+      const rect = this.node.firstChild.getBoundingClientRect()
+      this.offset = {
+        x: Math.floor(rect.left),
+        y: Math.floor(rect.top)
+      }
+    }
+
     handleMouseMove = (e) => {
       this.setState({
-        x: e.clientX,
-        y: e.clientY
+        x: e.clientX - this.offset.x,
+        y: e.clientY - this.offset.y
       })
     }
 
     render() {
       return (
-        <WrappedComponent
-          x={this.state.x}
-          y={this.state.y}
+        <span
           onMouseMove={this.handleMouseMove}
-        />
+          ref={(node) => (this.node = node)}
+        >
+          <WrappedComponent {...this.props} x={this.state.x} y={this.state.y} />
+        </span>
       )
     }
   }
-  WithMouse.displayName = `WithMouse(${getDisplayName(WrappedComponent)})`
+  WithMouse.displayName = `withMouse(${getDisplayName(WrappedComponent)})`
+  hoistNonReactStatic(WithMouse, WrappedComponent)
   return WithMouse
 }
 

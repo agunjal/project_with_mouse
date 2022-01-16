@@ -16,9 +16,11 @@ Make sure to declare propTypes for `PositionIndicator` and `Quadrant`.
 ## Tips
 
 ### PositionIndicator
+
 - update to accept a color prop (add a propType for it as well!)
 
 ### withMouse
+
 - should handle the mouse tracking functionality
 - you can track the mouse position using an `onMouseMove` event
 - you can get the mouse position from an event object using the `clientX` and `clientY` properties
@@ -26,6 +28,7 @@ Make sure to declare propTypes for `PositionIndicator` and `Quadrant`.
 - make sure to hoist statics and set the display name
 
 The mouse coordinates are always relative to the screen, but you need them relative to the component wrapped by `withMouse`.
+
 - Add a ref to the span in `withMouse`
 - After mounting store an instance prop with the offset of the first child found inside your span.
 - Adjust the mouse position by subtracting the quadrant offset.
@@ -36,9 +39,10 @@ The mouse coordinates are always relative to the screen, but you need them relat
 Create a component called `Quadrant` in a new file.
 
 Quadrants will be responsible for showing:
-  - a background color
-  - the relative mouse position
-  - a colored `PositionIndicator`
+
+- a background color
+- the relative mouse position
+- a colored `PositionIndicator`
 
 Create a prop api that allows the bg color and indicator color to be customized.
 

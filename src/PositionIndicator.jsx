@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const PositionIndicator = ({ x, y }) => (
+const PositionIndicator = ({ x, y, pi_bgcolor }) => (
   <div
     style={{
       width: '20px',
       height: '20px',
       borderRadius: '50%',
-      backgroundColor: 'red',
+      backgroundColor: `${pi_bgcolor}`,
       position: 'absolute',
-      top: `${y}px`,
       left: `${x}px`,
+      top: `${y}px`,
       transform: 'translate(-50%, -50%)'
     }}
   />
@@ -18,7 +18,8 @@ const PositionIndicator = ({ x, y }) => (
 
 PositionIndicator.propTypes = {
   x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired
+  y: PropTypes.number.isRequired,
+  pi_bgcolor: PropTypes.string.isRequired
 }
 
 export default PositionIndicator
